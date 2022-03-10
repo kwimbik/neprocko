@@ -1,0 +1,15 @@
+Zapoctovy program
+- treba maze solver
+- https://www.metalevel.at/prolog/optimization kombinatoricka optimalize ideas + vsechno mozny dalsi
+github repozirat s kodama: https://github.com/martinpilat/neprocko-2021
+
+spatne umistena negace: napr pro bratr: X  /= Y , pokusi se unifikovat. Pokud vyjde, ze X a Y jdou unifikovat, prolog vrati false.
+-> negace radsi davat dal, kde predikaty vyprodukuji konkretni hodnoty a ne pro obecne promenne.
+
+
+Prednaska II:
+viz prezentace xD
+
+predikat dif(A,B) -> resi rodinne vztahy, nemuzu byt sam sobe bratrem. Narozdil od A \= B, pokud dane prvni nerozbije vypocet.
+
+reverse predikat: pomoci akumulatoru
