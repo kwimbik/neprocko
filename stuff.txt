@@ -13,3 +13,5 @@ viz prezentace xD
 predikat dif(A,B) -> resi rodinne vztahy, nemuzu byt sam sobe bratrem. Narozdil od A \= B, pokud dane prvni nerozbije vypocet.
 
 reverse predikat: pomoci akumulatoru
+
+podivat se, jak funguje foldl predikat.
