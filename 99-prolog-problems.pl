@@ -74,3 +74,44 @@ compress([],[]).
 compress([X|[]],[X]).
 compress([X,X|Xs], Y) :-  compress([X|Xs], Y).
 compress([X,Z|Xs], [X|Y]) :- X \= Z, compress([Z|Xs], Y).
+
+
+%1.09 (**) Pack consecutive duplicates of list elements into sublists.
+%If a list contains repeated elements they should be placed in separate sublists.
+
+%Example:
+%?- pack([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
+%X = [[a,a,a,a],[b],[c,c],[a,a],[d],[e,e,e,e]]
+
+%pack([],[]).
+%pack([X],[X]).
+%pack([X1|Xs], [Y|Ys]) :-member(X1, Y), append(X1,T, Y), pack(Xs, [T|Ys]). 
+%pack([X1|Xs], Ys) :- append(X1, T, Ys), pack(Xs, T).
+
+%vzorovy reseni
+pack([],[]).
+pack([X|Xs],[Z|Zs]) :- transfer(X,Xs,Ys,Z), pack(Ys,Zs).
+
+% transfer(X,Xs,Ys,Z) Ys is the list that remains from the list Xs
+%    when all leading copies of X are removed and transfered to Z
+
+transfer(X,[],[],[X]).
+transfer(X,[Y|Ys],[Y|Ys],[X]) :- X \= Y.
+transfer(X,[X|Xs],Ys,[X|Zs]) :- transfer(X,Xs,Ys,Zs).
+
+%1.10 (*) Run-length encoding of a list.
+%Use the result of problem 1.09 to implement the so-called run-length encoding data compression method. 
+%Consecutive duplicates of elements are encoded as terms [N,E] where N is the number of duplicates of the element E.
+encode([X], [1-X]).
+encode([X1,X2|Xs], [1-X1,Z-X2|Ys]) :- encode([X2|Xs],[Z-X2|Ys]), X1 \= X2.
+encode([X,X|Xs], [Y-X|Ys]) :- encode([X|Xs], [YT-X|Ys]), Y is YT + 1.
+
+
+%1.11 (*) Modified run-length encoding.
+%Modify the result of problem 1.10 in such a way that if an element has no duplicates it is simply copied into the result list. Only elements with duplicates are transferred as [N,E] terms.
+
+%Example:
+%?- encode_modified([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
+%X = [[4,a],b,[2,c],[2,a],d,[4,e]]
+
+
