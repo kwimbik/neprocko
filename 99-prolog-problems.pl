@@ -115,3 +115,12 @@ encode([X,X|Xs], [Y-X|Ys]) :- encode([X|Xs], [YT-X|Ys]), Y is YT + 1.
 %X = [[4,a],b,[2,c],[2,a],d,[4,e]]
 
 
+encode_modified(X, Y) :- encode(X, Z), strip(Z, Y).
+
+strip([],[]).
+strip([1-X|Ys],[X|Zs]) :- strip(Ys,Zs).
+strip([N-X|Ys],[N-X|Zs]) :- N > 1, strip(Ys,Zs).
+
+
+%1.12 (**) Decode a run-length encoded list.
+%Given a run-length code list generated as specified in problem 1.11. Construct its uncompressed version.
