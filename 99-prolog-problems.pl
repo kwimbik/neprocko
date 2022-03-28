@@ -83,11 +83,6 @@ compress([X,Z|Xs], [X|Y]) :- X \= Z, compress([Z|Xs], Y).
 %?- pack([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
 %X = [[a,a,a,a],[b],[c,c],[a,a],[d],[e,e,e,e]]
 
-%pack([],[]).
-%pack([X],[X]).
-%pack([X1|Xs], [Y|Ys]) :-member(X1, Y), append(X1,T, Y), pack(Xs, [T|Ys]). 
-%pack([X1|Xs], Ys) :- append(X1, T, Ys), pack(Xs, T).
-
 %vzorovy reseni
 pack([],[]).
 pack([X|Xs],[Z|Zs]) :- transfer(X,Xs,Ys,Z), pack(Ys,Zs).
@@ -124,3 +119,27 @@ strip([N-X|Ys],[N-X|Zs]) :- N > 1, strip(Ys,Zs).
 
 %1.12 (**) Decode a run-length encoded list.
 %Given a run-length code list generated as specified in problem 1.11. Construct its uncompressed version.
+
+rle_decode([], []).
+rle_decode([X|Xs], [X|Ys]) :- X \= _-_ , rle_decode(Xs, Ys).
+rle_decode([1-X|Xs], [X|Ys]) :- rle_decode(Xs, Ys).
+rle_decode([N-X|Xs], [X|Ys]) :- N > 1 , N1 is N - 1, rle_decode([N1-X|Xs], Ys).
+
+
+%1.14 (*) Duplicate the elements of a list.
+%Example:
+%?- dupli([a,b,c,c,d],X).
+%X = [a,a,b,b,c,c,c,c,d,d]
+
+dupli([],[]).
+dupli([X|Xs],[X,X|Ys]) :- dupli(Xs,Ys).
+
+%1.15 (**) Duplicate the elements of a list a given number of times.
+%Example:
+%?- dupli([a,b,c],3,X).
+%X = [a,a,a,b,b,b,c,c,c]
+
+dupli([],_,[]).
+dupli(X,Y,Z) :- \+ is_list(Y), dupli(X,[Y,Y],Z).
+dupli([X|Xs],[1, M],[X|Ys]) :- dupli(Xs,[M,M],Ys).
+dupli([X|Xs],[N, M],[X|Ys]) :- N > 1, N1 is N -1, dupli([X|Xs],[N1,M],Ys).
