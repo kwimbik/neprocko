@@ -13,7 +13,6 @@ Y =  deleno(R1, R2), append(X1, X2, X),  length(X1,K1), length(X2, K2), K1 >0, K
 
 %del(+X1, +X2, -Y) Division
 del(X1,X2, Y) :- not(X2 is 0), Y is X1 // X2.
-del(_,_, 0).
 
 %ev(+X, -Y) evaluates expression in postfix
 ev(X, X) :- integer(X).
